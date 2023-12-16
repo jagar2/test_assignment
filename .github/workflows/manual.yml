@@ -32,4 +32,3 @@ jobs:
       run: |
         git add .
         git diff --staged --quiet || (git commit -m "Update file" && git push)
-      
