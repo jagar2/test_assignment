@@ -1,34 +1,23 @@
-# This is a basic workflow that is manually triggered
-name: Manual workflow
+name: Format
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on: push
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
+  format-code:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
     steps:
-    - uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
 
-    # Set up Git user information
-    - name: Set up Git
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-    
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello World" > file.txt
+      # Other steps that change files in the repository
+      # Runs a single command using the runners shell
+      - name: Send greeting
+        run: echo "Hello World" > file.txt
 
-    - name: Commit and push if changes
-      run: |
-        git add .
-        git diff --staged --quiet || (git commit -m "Update file" && git push)
+      # Commit all changed files back to the repository
+      - uses: stefanzweifel/git-auto-commit-action@v5
