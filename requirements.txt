@@ -1,3 +1,5 @@
 jupyter
 otter-grader
 docker
+tqdm
+

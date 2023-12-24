@@ -32,10 +32,11 @@ jobs:
 
       - name: Autograde
         run: |
-          for file in $(find . -name "*.ipynb"); do
-            echo "Grading $file"
-            otter grade $file
-          done
+          otter grade -n demo -a grade_file/demo-autograder_*.zip -v /*.ipynb
+
+        # for file in $(find . -name "*.ipynb"); do
+        #   echo "Grading $FILE"
+        # done
 
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v5
