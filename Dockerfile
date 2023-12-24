@@ -1,27 +1,19 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
 FROM ubuntu:latest
 
 # Install Docker and Python
 RUN apt-get update && \
-    apt-get install -y docker.io
+    apt-get install -y docker.io python3 python3-pip
 
-
-# # Prevents Python from writing pyc files.
-# ENV PYTHONDONTWRITEBYTECODE=1
-
-# # Keeps Python from buffering stdout and stderr to avoid situations where
-# # the application crashes without emitting any logs due to buffering.
-# ENV PYTHONUNBUFFERED=1
+RUN pip install otter-grader
 
 WORKDIR /app
 
 # Copy the source code into the /app directory in the container.
-COPY ./dist /app
+COPY ./dist /app/dist
+COPY ./install_docker.sh /app/install_docker.sh
+RUN bash install_docker.sh
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
@@ -35,30 +27,22 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-# # Download dependencies as a separate step to take advantage of Docker's caching.
-# # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# # Leverage a bind mount to requirements.txt to avoid having to copy them into
-# # into this layer.
-# RUN --mount=type=cache,target=/root/.cache/pip \
-#     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-#     python -m pip install -r requirements.txt
+# # Switch to the non-privileged user to run the application.
+# USER appuser
 
-# Switch to the non-privileged user to run the application.
-USER appuser
+# # # Expose the port that the application listens on.
+# # EXPOSE 5000
 
-# # Expose the port that the application listens on.
-# EXPOSE 5000
-
-# Temporarily list contents of /app to debug
-RUN ls
-
-# Finds the Autograder file in the dist directory.
-RUN AUTOGRADER_FILE=$(find ./dist -type f -name "*autograde*.zip")
+# # Temporarily list contents of /app to debug
+# RUN ls
 
 # # Finds the Autograder file in the dist directory.
-# RUN NOTEBOOKS_FILE=$(find ./app/notebooks -type f -name "*.ipynb")
+RUN AUTOGRADER_FILE=$(find ./dist -type f -name "*autograde*.zip")
 
-CMD ["sh", "-c", "otter grade -n demo -a $AUTOGRADER_FILE -v app/submission -o results.csv"]
+# # # Finds the Autograder file in the dist directory.
+# # RUN NOTEBOOKS_FILE=$(find ./app/notebooks -type f -name "*.ipynb")
 
-# # Run the application.
-# CMD ["otter","grade","-n","demo","-a",$AUTOGRADER_FILE,"-v","app/submission", "-o", "results.csv"] 
+# CMD ["sh", "-c", "otter grade -n demo -a $AUTOGRADER_FILE -v ./submission -o ./submission"]
+
+# # # Run the application.
+# # CMD ["otter","grade","-n","demo","-a",$AUTOGRADER_FILE,"-v","app/submission", "-o", "results.csv"] 
