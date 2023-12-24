@@ -32,7 +32,7 @@ jobs:
 
       - name: Autograde
         run: |
-          otter grade -n demo -a grade_file/demo-autograder_*.zip -v /*.ipynb
+          otter grade -a grade_file/demo-autograder_*.zip -p ./ --timeout 6000
 
         # for file in $(find . -name "*.ipynb"); do
         #   echo "Grading $FILE"
