@@ -2,19 +2,21 @@
 # otter grade -n demo -a ./dist/demo-autograder_2023_12_15T16_56_04_536836.zip -v ./submission
 FROM ubuntu:latest
 
-# Install Docker and Python
-RUN apt-get update && \
-    apt-get install -y docker.io python3 python3-pip
-
-RUN pip install otter-grader
-RUN pip install --upgrade python-on-whales
-
 WORKDIR /app
 
 # Copy the source code into the /app directory in the container.
 COPY ./dist /app/dist
 COPY ./install_docker.sh /app/install_docker.sh
-RUN bash install_docker.sh
+# RUN bash install_docker.sh
+
+# Install Docker and Python
+RUN apt-get update && \
+    apt-get install -y docker python3 python3-pip
+
+RUN pip install otter-grader
+RUN pip install --upgrade python-on-whales
+
+
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
