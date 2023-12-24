@@ -7,28 +7,48 @@ WORKDIR /app
 # Copy the source code into the /app directory in the container.
 COPY ./dist /app/dist
 COPY ./install_docker.sh /app/install_docker.sh
+COPY ./docker_buildx.sh /app/./docker_buildx.sh
 # RUN bash install_docker.sh
+# RUN bash docker_buildx.sh
 
-# Install Docker and Python
-RUN apt-get update && \
-    apt-get install -y docker python3 python3-pip
+# # Install Docker and Python
+# RUN apt-get update && \
+#     apt-get install -y docker
 
-RUN pip install otter-grader
-RUN pip install --upgrade python-on-whales
+# # Install necessary packages and add the deadsnakes PPA
+# RUN apt-get update && apt-get install -y \
+#     software-properties-common \
+#     && add-apt-repository ppa:deadsnakes/ppa
+
+
+# # Install Python 3.10
+# RUN apt-get install -y python3.10 python3.10-venv python3.10-dev
+
+# # Install pip for Python 3.10
+# RUN apt-get install -y python3-pip
+
+# # Optionally, make Python 3.10 the default Python version
+# RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1
+
+# # Clean up
+# RUN apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
+
+# RUN pip install otter-grader
 
 
 
-# Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
+# # Create a non-privileged user that the app will run under.
+# # See https://docs.docker.com/go/dockerfile-user-best-practices/
+# ARG UID=10001
+# RUN adduser \
+#     --disabled-password \
+#     --gecos "" \
+#     --home "/nonexistent" \
+#     --shell "/sbin/nologin" \
+#     --no-create-home \
+#     --uid "${UID}" \
+#     appuser
 
 # # Switch to the non-privileged user to run the application.
 # USER appuser
