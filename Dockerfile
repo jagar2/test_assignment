@@ -4,18 +4,24 @@
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/go/dockerfile-reference/
 
-ARG PYTHON_VERSION=3.10.13
-FROM python:${PYTHON_VERSION}-slim as base
+FROM ubuntu:latest
 
-# Prevents Python from writing pyc files.
-ENV PYTHONDONTWRITEBYTECODE=1
+# Install Docker and Python
+RUN apt-get update && \
+    apt-get install -y docker.io
 
-# Keeps Python from buffering stdout and stderr to avoid situations where
-# the application crashes without emitting any logs due to buffering.
-ENV PYTHONUNBUFFERED=1
+
+# # Prevents Python from writing pyc files.
+# ENV PYTHONDONTWRITEBYTECODE=1
+
+# # Keeps Python from buffering stdout and stderr to avoid situations where
+# # the application crashes without emitting any logs due to buffering.
+# ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
-WORKDIR /notebooks
+
+# Copy the source code into the /app directory in the container.
+COPY ./dist /app
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
@@ -29,25 +35,25 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
+# # Download dependencies as a separate step to take advantage of Docker's caching.
+# # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
+# # Leverage a bind mount to requirements.txt to avoid having to copy them into
+# # into this layer.
+# RUN --mount=type=cache,target=/root/.cache/pip \
+#     --mount=type=bind,source=requirements.txt,target=requirements.txt \
+#     python -m pip install -r requirements.txt
 
 # Switch to the non-privileged user to run the application.
 USER appuser
 
-# Copy the source code into the /app directory in the container.
-COPY ./dist/* /app/
+# # Expose the port that the application listens on.
+# EXPOSE 5000
 
-# Expose the port that the application listens on.
-EXPOSE 5000
+# Temporarily list contents of /app to debug
+RUN ls
 
 # Finds the Autograder file in the dist directory.
-RUN AUTOGRADER_FILE=$(find ./app/ -type f -name "*autograde*.zip")
+RUN AUTOGRADER_FILE=$(find ./dist -type f -name "*autograde*.zip")
 
 # # Finds the Autograder file in the dist directory.
 # RUN NOTEBOOKS_FILE=$(find ./app/notebooks -type f -name "*.ipynb")
