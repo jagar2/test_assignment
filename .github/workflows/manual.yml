@@ -19,5 +19,23 @@ jobs:
       - name: Send greeting
         run: echo "Hello World" > file.txt
 
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10" # specify the Python version
+
+      # Install required files
+      - name: Install Otter-Grader
+        run: |
+          pip install -r requirements.txt
+
+      - name: Autograde
+        run: |
+          for file in $(find . -name "*.ipynb"); do
+            echo "Grading $file"
+            otter grade $file
+          done
+
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v5
