@@ -1,42 +1,41 @@
 name: Format
 
 on: push
+# jobs:
+#   format-code:
+#     runs-on: ubuntu-latest
 
-jobs:
-  format-code:
-    runs-on: ubuntu-latest
+#     permissions:
+#       # Give the default GITHUB_TOKEN write permission to commit and push the
+#       # added or changed files to the repository.
+#       contents: write
 
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
-      contents: write
+#     steps:
+#       - uses: actions/checkout@v4
 
-    steps:
-      - uses: actions/checkout@v4
+#       # Other steps that change files in the repository
+#       # Runs a single command using the runners shell
+#       - name: Send greeting
+#         run: echo "Hello World" > file.txt
 
-      # Other steps that change files in the repository
-      # Runs a single command using the runners shell
-      - name: Send greeting
-        run: echo "Hello World" > file.txt
+#       # Set up Python
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: "3.10" # specify the Python version
 
-      # Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10" # specify the Python version
+#       # Install required files
+#       - name: Install Otter-Grader
+#         run: |
+#           pip install -r requirements.txt
 
-      # Install required files
-      - name: Install Otter-Grader
-        run: |
-          pip install -r requirements.txt
+#       - name: Autograde
+#         run: |
+#           otter grade -a grade_file/demo-autograder_*.zip -p ./ --timeout 6000
 
-      - name: Autograde
-        run: |
-          otter grade -a grade_file/demo-autograder_*.zip -p ./ --timeout 6000
+#         # for file in $(find . -name "*.ipynb"); do
+#         #   echo "Grading $FILE"
+#         # done
 
-        # for file in $(find . -name "*.ipynb"); do
-        #   echo "Grading $FILE"
-        # done
-
-      # Commit all changed files back to the repository
-      - uses: stefanzweifel/git-auto-commit-action@v5
+#       # Commit all changed files back to the repository
+#       - uses: stefanzweifel/git-auto-commit-action@v5
