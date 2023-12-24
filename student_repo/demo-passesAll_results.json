@@ -1,0 +1,31 @@
+{
+    "tests": [
+        {
+            "name": "Public Tests",
+            "visibility": "visible",
+            "output": "q1 results: All test cases passed!\n\nq3 results: All test cases passed!\n\nq2 results: All test cases passed!",
+            "status": "passed"
+        },
+        {
+            "name": "q1",
+            "score": 1.0,
+            "max_score": 1.0,
+            "visibility": "hidden",
+            "output": "q1 results: All test cases passed!"
+        },
+        {
+            "name": "q3",
+            "score": 1.0,
+            "max_score": 1.0,
+            "visibility": "hidden",
+            "output": "q3 results: All test cases passed!"
+        },
+        {
+            "name": "q2",
+            "score": 1.0,
+            "max_score": 1.0,
+            "visibility": "hidden",
+            "output": "q2 results: All test cases passed!"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "tests": [
+        {
+            "name": "Public Tests",
+            "visibility": "visible",
+            "output": "q1 results: All test cases passed!\n\nq3 results: All test cases passed!\n\nq2 results: All test cases passed!",
+            "status": "passed"
+        },
+        {
+            "name": "q1",
+            "score": 1.0,
+            "max_score": 1.0,
+            "visibility": "hidden",
+            "output": "q1 results: All test cases passed!"
+        },
+        {
+            "name": "q3",
+            "score": 0.5,
+            "max_score": 1.0,
+            "visibility": "hidden",
+            "output": "q3 results:\n    q3 - 1 result:\n        \u2705 Test case passed\n\n    q3 - 2 result:\n        \u2705 Test case passed\n\n    q3 - 3 result:\n        \u2705 Test case passed\n\n    q3 - 4 result:\n        \u2705 Test case passed\n\n    q3 - 5 result:\n        \u274c Test case failed\n        Trying:\n            np.isclose(price_by_flavor['chocolate'], 3.33333333)\n        Expecting:\n            True\n        **********************************************************************\n        Line 1, in q3 4\n        Failed example:\n            np.isclose(price_by_flavor['chocolate'], 3.33333333)\n        Expected:\n            True\n        Got:\n            False\n\n    q3 - 6 result:\n        \u274c Test case failed\n        Trying:\n            np.isclose(price_by_flavor['mint'], 4.5)\n        Expecting:\n            True\n        **********************************************************************\n        Line 1, in q3 5\n        Failed example:\n            np.isclose(price_by_flavor['mint'], 4.5)\n        Expected:\n            True\n        Got:\n            False\n\n    q3 - 7 result:\n        \u274c Test case failed\n        Trying:\n            np.isclose(price_by_flavor['strawberry'], 3)\n        Expecting:\n            True\n        **********************************************************************\n        Line 1, in q3 6\n        Failed example:\n            np.isclose(price_by_flavor['strawberry'], 3)\n        Expected:\n            True\n        Got:\n            False\n\n    q3 - 8 result:\n        \u274c Test case failed\n        Trying:\n            np.isclose(price_by_flavor['vanilla'], 1.75)\n        Expecting:\n            True\n        **********************************************************************\n        Line 1, in q3 7\n        Failed example:\n            np.isclose(price_by_flavor['vanilla'], 1.75)\n        Expected:\n            True\n        Got:\n            False"
+        },
+        {
+            "name": "q2",
+            "score": 1.0,
+            "max_score": 1.0,
+            "visibility": "hidden",
+            "output": "q2 results: All test cases passed!"
+        }
+    ]
+}
