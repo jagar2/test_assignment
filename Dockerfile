@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-
+# otter grade -n demo -a ./dist/demo-autograder_2023_12_15T16_56_04_536836.zip -v ./submission
 FROM ubuntu:latest
 
 # Install Docker and Python
@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get install -y docker.io python3 python3-pip
 
 RUN pip install otter-grader
+RUN pip install --upgrade python-on-whales
 
 WORKDIR /app
 
